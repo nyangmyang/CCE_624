@@ -27,9 +27,9 @@ def _lazy_parsing_proc():
 def _load_df(result_dir: str) -> pd.DataFrame:
     # Replace to streamlit.session_state
     db_config = {
-        'host': 'localhost',
-        'user': 'nyangnyang',
-        'password': '0000',
+        'host': '192.168.203.32',
+        'user': 'newuser',
+        'password': 'easypw12',
         'database': 'itsec_01'
     }
 
@@ -49,9 +49,7 @@ def _load_df(result_dir: str) -> pd.DataFrame:
     test_manager.conn.commit()
     test_manager.conn.close()
     # Remove completed files
-    #for fname in os.listdir(result_dir):
-       #if fname.endswith('.json'):
-        #   os.remove(os.path.join(result_dir, fname))
+   
     return pd.DataFrame(rows)
 
 def _parse_json(js: Dict, fname: str) -> List[Dict]:
@@ -82,10 +80,23 @@ def _kpi(_: int, total: int, vuln: int, good: int, high: int):
 
 def _header():
     st.markdown(PAGE3_STYLE, unsafe_allow_html=True)
-    st.markdown(
-        '<div class="page-title"><h1>진단 결과 페이지</h1></div>',
-        unsafe_allow_html=True,
-    )
+    
+    # 제목과 초기화 버튼을 같은 라인에 배치
+    col_title, col_reset = st.columns([5, 1])
+    
+    with col_title:
+        st.markdown(
+            '<div class="page-title"><h1>🐰진단 결과 페이지</h1></div>',
+            unsafe_allow_html=True,
+        )
+    
+    with col_reset:
+        st.markdown("") 
+        st.markdown("")  # 버튼 위치를 더 아래로
+        if st.button("🔄초기화", key="reset_btn", help="모든 필터를 초기화합니다"):
+            st.session_state.reset_filters = True
+            st.rerun()
+
 def _filter_box(df: pd.DataFrame) -> pd.DataFrame:
     if "reset_filters" not in st.session_state:
         st.session_state.reset_filters = False
@@ -122,17 +133,6 @@ def _filter_box(df: pd.DataFrame) -> pd.DataFrame:
     </style>
     """, unsafe_allow_html=True)
 
-    # 헤더와 초기화 버튼
-    col_header, col_reset = st.columns([4, 1])
-    with col_header:
-        st.markdown("### 🔍 보안 점검 필터")
-        st.caption("취약점 점검 결과를 다양한 기준으로 필터링할 수 있습니다.")
-    
-    with col_reset:
-        if st.button("🔄 필터 초기화", key="reset_btn", help="모든 필터를 초기화합니다"):
-            st.session_state.reset_filters = True
-            st.rerun()
-
     # 📌 통합 필터 익스펜더
     with st.expander(" ",expanded=True):
         # 1️⃣ PC / 자산 기준
@@ -140,7 +140,6 @@ def _filter_box(df: pd.DataFrame) -> pd.DataFrame:
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            #st.markdown("**Hostname**")
             hostname_options = sorted([x for x in df["호스트"].unique() if x is not None])
             selected_hostnames = st.multiselect(
                 "**PC 이름 선택**",
@@ -151,8 +150,6 @@ def _filter_box(df: pd.DataFrame) -> pd.DataFrame:
             )
         
         with col2:
-            st.markdown("**IP 주소**")
-            # IP 주소는 OS정보에서 추출하거나 별도 컬럼이 있다면 사용
             ip_options = []
             if "IP주소" in df.columns:
                 ip_options = sorted([x for x in df["IP주소"].unique() if x is not None])
@@ -164,7 +161,7 @@ def _filter_box(df: pd.DataFrame) -> pd.DataFrame:
                 ip_options = sorted(list(set(ip_options)))
             
             selected_ips = st.multiselect(
-                "IP 주소 선택", 
+                "**IP 주소 선택**", 
                 options=ip_options,
                 default=st.session_state.get('selected_ips', []),
                 key='selected_ips',
@@ -172,10 +169,9 @@ def _filter_box(df: pd.DataFrame) -> pd.DataFrame:
             )
         
         with col3:
-            st.markdown("**OS 유형**")
             os_options = sorted([x for x in df["OS정보"].unique() if x is not None])
             selected_os = st.multiselect(
-                "OS 유형 선택",
+                "**OS 유형 선택**",
                 options=os_options,
                 default=st.session_state.get('selected_os', []),
                 key='selected_os',
@@ -189,10 +185,9 @@ def _filter_box(df: pd.DataFrame) -> pd.DataFrame:
         col1, col2 = st.columns(2)
         
         with col1:
-            st.markdown("**중요도**")
             importance_options = sorted([x for x in df["중요도"].unique() if x is not None])
             selected_importance = st.multiselect(
-                "중요도 선택",
+                "**중요도 선택**",
                 options=importance_options,
                 default=st.session_state.get('selected_importance', []),
                 key='selected_importance',
@@ -200,10 +195,9 @@ def _filter_box(df: pd.DataFrame) -> pd.DataFrame:
             )
         
         with col2:
-            st.markdown("**우선 조치 여부**")
             priority_options = ["즉시조치 필요", "모니터링 가능"]
             selected_priority = st.multiselect(
-                "우선 조치 선택",
+                "**우선 조치 선택**",
                 options=priority_options,
                 default=[],
                 placeholder="조치 우선순위를 선택하세요..."
@@ -216,7 +210,6 @@ def _filter_box(df: pd.DataFrame) -> pd.DataFrame:
         col1, col2 = st.columns([2, 1])
         
         with col1:
-            st.markdown("**취약점 카테고리**")
             # title 기반으로 세부 카테고리 분류
             def categorize_by_title(title):
                 if pd.isna(title):
@@ -248,7 +241,7 @@ def _filter_box(df: pd.DataFrame) -> pd.DataFrame:
             category_options = sorted(df_with_category['카테고리'].unique())
             
             selected_categories = st.multiselect(
-                "카테고리 선택",
+                "**카테고리 선택**",
                 options=category_options,
                 default=st.session_state.get('selected_categories', []),
                 key='selected_categories',
@@ -256,9 +249,8 @@ def _filter_box(df: pd.DataFrame) -> pd.DataFrame:
             )
         
         with col2:
-            st.markdown("**항목 검색**")
             item_search = st.text_input(
-                "코드/제목 검색",
+                "**코드/제목 검색**",
                 value=st.session_state.get('item_search', ''),
                 key='item_search',
                 placeholder="예: U-01, root 접속"
@@ -270,28 +262,17 @@ def _filter_box(df: pd.DataFrame) -> pd.DataFrame:
         st.markdown("#### ✅ 상태 기준")
         col1, col2 = st.columns([2, 1])
         with col1:
-            st.markdown("**점검 결과**")
             result_options = sorted([x for x in df["결과"].unique() if x is not None])
             selected_results = st.multiselect(
-                "결과 선택",
+                "**결과 선택**",
                 options=result_options,
-                default=st.session_state.get('selected_results', ["취약"]),  # 기본값: 취약만
+                default=st.session_state.get('selected_results', ["양호", "취약", "인터뷰"]),  # 기본값: 취약만
                 key='selected_results',
                 placeholder="점검 결과를 선택하세요..."
             )
         
         with col2:
             st.info("💡 **기본 뷰**: 취약 항목만 표시됩니다.")
-
-    # 기본 정렬 설정
-    st.markdown("---")  # 구분선
-    col_sort1, col_sort2 = st.columns(2)
-    with col_sort1:
-        s_col = st.selectbox("정렬 기준", ["진단코드","중요도","진단항목","결과"], 
-                           index=0, key="sort_col")
-    with col_sort2:
-        s_ord = st.selectbox("정렬 순서", ["오름차순","내림차순"], 
-                           index=0, key="sort_order")
 
     # ========== 필터 적용 로직 ==========
     out = df.copy()
@@ -353,15 +334,65 @@ def _filter_box(df: pd.DataFrame) -> pd.DataFrame:
         )
         out = out[search_mask]
     
-    # 정렬
-    out = out.sort_values(s_col, ascending=(s_ord == "오름차순"))
-    
     # 적용된 필터 요약 표시
     if len(out) != len(df):
         st.success(f"🎯 필터 적용 완료: {len(df)}개 중 {len(out)}개 항목이 선택되었습니다.")
     
     return out.reset_index(drop=True)
 
+def _results_section(df: pd.DataFrame):
+    if df.empty:
+        st.info("조건에 맞는 데이터가 없습니다.")
+        st.markdown("</div>", unsafe_allow_html=True); return
+
+    df_grid = df.copy()
+    df_grid['조치'] = '조치하기'
+    gb = GridOptionsBuilder.from_dataframe(df_grid)
+    gb.configure_pagination(paginationAutoPageSize=True)
+    gb.configure_default_column(wrapText=True, autoHeight=True)
+    gb.configure_selection('single', use_checkbox=False)
+
+    gb.configure_column("진단코드", width=30)
+    gb.configure_column("중요도", width=30)
+    gb.configure_column("진단항목", width=150)
+    gb.configure_column("결과", width=30, cellClassRules={
+        "red-cell":   "value == '취약'",
+        "green-cell": "value == '양호'",
+        "orange-cell":"value == '인터뷰'",
+    })
+    gb.configure_column("조치방법", width=300, wrapText=True, autoHeight=True)
+    gb.configure_column("호스트", width=150)
+    gb.configure_column("진단시점", width=150)
+    gb.configure_column("OS정보", width=140)
+    gb.configure_column("조치", width=100)
+
+    grid_options = gb.build()
+
+    custom_css = {
+        ".red-cell":    {"background-color": "#ffebee", "color": "#c62828", "font-weight": "bold"},
+        ".green-cell":  {"background-color": "#e8f5e8", "color": "#2e7d32", "font-weight": "bold"},
+        ".orange-cell": {"background-color": "#fff3e0", "color": "#ef6c00", "font-weight": "bold"}
+    }
+
+    grid_response = AgGrid(
+        df_grid,
+        gridOptions=grid_options,
+        update_mode='MODEL_CHANGED',
+        allow_unsafe_jscode=True,
+        fit_columns_on_grid_load=True,  # 화면에 맞춰 컬럼 조정
+        theme='blue',
+        height=420,
+        custom_css=custom_css,
+        enable_enterprise_modules=False,
+    )
+
+    selected = grid_response['selected_rows']
+    # 수정된 부분: DataFrame 체크를 명시적으로 처리
+    if selected is not None and len(selected) > 0:
+        row = selected[0]
+        st.success(f"진단코드 {row['진단코드']}가 클릭되어 조치 처리가 가능합니다.")
+    
+    st.markdown("</div>", unsafe_allow_html=True)
 def _actions(df: pd.DataFrame):
     st.markdown('<div class="actions-section">', unsafe_allow_html=True)
     col_xls = st.columns(1)[0]
@@ -386,19 +417,17 @@ def show():
         return
 
     _header()
-    st.markdown("<div style='height: 2.2rem'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height: 0.5rem'></div>", unsafe_allow_html=True)
 
     filtered_df = _filter_box(df)
 
-    
-    st.markdown("<div style='height: 2.2rem'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height: 1.5rem'></div>", unsafe_allow_html=True)
     kpi_cols = st.columns(4)
     kpi_vals = [
         ("총 항목", len(filtered_df), "#6366f1"),
         ("양호",   (filtered_df["결과"] == "양호").sum(), "#22c55e"),
         ("취약",   (filtered_df["결과"] == "취약").sum(), "#ef4444"),
         ("인터뷰",   (filtered_df["결과"] == "인터뷰").sum(), "#f59e42"),
-        # ("고위험", (filtered_df["위험도"] == "높음").sum(), "#f59e42"),
     ]
     for col, (label, value, color) in zip(kpi_cols, kpi_vals):
         col.markdown(f"""
@@ -408,7 +437,10 @@ def show():
         </div>
         """, unsafe_allow_html=True)
 
-    
+    st.markdown("<div style='height: 1.5rem'></div>", unsafe_allow_html=True)
+    _results_section(filtered_df)
+    st.markdown("<div style='height: 1.5rem'></div>", unsafe_allow_html=True)
+    _actions(filtered_df)
 
 if __name__ == "__main__":
     st.set_page_config(page_title="진단 결과", layout="wide")
