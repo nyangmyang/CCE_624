@@ -1,0 +1,295 @@
+{
+  "targetip": "192.168.0.1",
+  "testedtime": "2025-06-15 15:12:22",
+  "osinfo": "Ubuntu 22.04.3 LTS",
+  "result": [
+    {
+      "itemcode": "U-01",
+      "importance": 1,
+      "title": "root 계정 원격 접속 제한",
+      "result": 2,
+      "codedetail": "grep -i \"permitrootlogin\" $SSHCONFIG | grep -v \"setting\" | grep -v \"without\" 의 결과값: permitrootlogin no",
+      "resultdetail": "원격 터미널 서비스를 사용하지 않거나, 사용 시 root 직접 접속을 차단되어 있음"
+    },
+    {
+      "itemcode": "U-02",
+      "importance": 1,
+      "title": "패스워드 복잡성 설정",
+      "result": 0,
+      "codedetail": "cat /etc/pam.d/system-auth | grep minlen | awk {print \\$7}의 결과값입니다 : minlen= cat /etc/pam.d/system-auth | grep minlen | awk {print \\$8, \\$9, \\$10, \\$11}의 결과값입니다 : credit=",
+      "resultdetail": "패스워드 최소길이 8자리 이상, 영문·숫자·특수문자 최소 입력 기능이 설정되지 않은 경우"
+    },
+    {
+      "itemcode": "U-03",
+      "importance": 1,
+      "title": "점검 항목 3",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 3",
+      "resultdetail": "점검 항목 3에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-04",
+      "importance": 2,
+      "title": "점검 항목 4",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 4",
+      "resultdetail": "점검 항목 4에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-05",
+      "importance": 3,
+      "title": "점검 항목 5",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 5",
+      "resultdetail": "점검 항목 5에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-06",
+      "importance": 1,
+      "title": "점검 항목 6",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 6",
+      "resultdetail": "점검 항목 6에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-07",
+      "importance": 2,
+      "title": "점검 항목 7",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 7",
+      "resultdetail": "점검 항목 7에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-08",
+      "importance": 3,
+      "title": "점검 항목 8",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 8",
+      "resultdetail": "점검 항목 8에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-09",
+      "importance": 1,
+      "title": "점검 항목 9",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 9",
+      "resultdetail": "점검 항목 9에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-10",
+      "importance": 2,
+      "title": "점검 항목 10",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 10",
+      "resultdetail": "점검 항목 10에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-11",
+      "importance": 3,
+      "title": "점검 항목 11",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 11",
+      "resultdetail": "점검 항목 11에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-12",
+      "importance": 1,
+      "title": "점검 항목 12",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 12",
+      "resultdetail": "점검 항목 12에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-13",
+      "importance": 2,
+      "title": "점검 항목 13",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 13",
+      "resultdetail": "점검 항목 13에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-14",
+      "importance": 3,
+      "title": "점검 항목 14",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 14",
+      "resultdetail": "점검 항목 14에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-15",
+      "importance": 1,
+      "title": "점검 항목 15",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 15",
+      "resultdetail": "점검 항목 15에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-16",
+      "importance": 2,
+      "title": "점검 항목 16",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 16",
+      "resultdetail": "점검 항목 16에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-17",
+      "importance": 3,
+      "title": "점검 항목 17",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 17",
+      "resultdetail": "점검 항목 17에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-18",
+      "importance": 1,
+      "title": "점검 항목 18",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 18",
+      "resultdetail": "점검 항목 18에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-19",
+      "importance": 2,
+      "title": "점검 항목 19",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 19",
+      "resultdetail": "점검 항목 19에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-20",
+      "importance": 3,
+      "title": "점검 항목 20",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 20",
+      "resultdetail": "점검 항목 20에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-21",
+      "importance": 1,
+      "title": "점검 항목 21",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 21",
+      "resultdetail": "점검 항목 21에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-22",
+      "importance": 2,
+      "title": "점검 항목 22",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 22",
+      "resultdetail": "점검 항목 22에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-23",
+      "importance": 3,
+      "title": "점검 항목 23",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 23",
+      "resultdetail": "점검 항목 23에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-24",
+      "importance": 1,
+      "title": "점검 항목 24",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 24",
+      "resultdetail": "점검 항목 24에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-25",
+      "importance": 2,
+      "title": "점검 항목 25",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 25",
+      "resultdetail": "점검 항목 25에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-26",
+      "importance": 3,
+      "title": "점검 항목 26",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 26",
+      "resultdetail": "점검 항목 26에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-27",
+      "importance": 1,
+      "title": "점검 항목 27",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 27",
+      "resultdetail": "점검 항목 27에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-28",
+      "importance": 2,
+      "title": "점검 항목 28",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 28",
+      "resultdetail": "점검 항목 28에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-29",
+      "importance": 3,
+      "title": "점검 항목 29",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 29",
+      "resultdetail": "점검 항목 29에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-30",
+      "importance": 1,
+      "title": "점검 항목 30",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 30",
+      "resultdetail": "점검 항목 30에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-31",
+      "importance": 2,
+      "title": "점검 항목 31",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 31",
+      "resultdetail": "점검 항목 31에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-32",
+      "importance": 3,
+      "title": "점검 항목 32",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 32",
+      "resultdetail": "점검 항목 32에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-33",
+      "importance": 1,
+      "title": "점검 항목 33",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 33",
+      "resultdetail": "점검 항목 33에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-34",
+      "importance": 2,
+      "title": "점검 항목 34",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 34",
+      "resultdetail": "점검 항목 34에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-35",
+      "importance": 3,
+      "title": "점검 항목 35",
+      "result": 1,
+      "codedetail": "명령어 결과값 예시 for 항목 35",
+      "resultdetail": "점검 항목 35에 대한 결과 상세 설명"
+    },
+    {
+      "itemcode": "U-36",
+      "importance": 1,
+      "title": "점검 항목 36",
+      "result": 0,
+      "codedetail": "명령어 결과값 예시 for 항목 36",
+      "resultdetail": "점검 항목 36에 대한 결과 상세 설명"
+    }
+  ]
+}

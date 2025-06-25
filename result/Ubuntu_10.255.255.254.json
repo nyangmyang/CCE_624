@@ -1,0 +1,295 @@
+{
+"targetip": "10.255.255.254",
+"testedtime": "2025-06-17 15:05:07",
+"osinfo": "Ubuntu 22.04.3 LTS",
+"result": [
+{
+"itemcode": "U-01",
+"importance": 1,
+"title": "root 계정 원격 접속 제한",
+"result": 2,
+"codedetail": "sshd_config 파일을 찾을 수 없음",
+"resultdetail": "sshd_config 파일을 찾을 수 없음"
+},
+{
+"itemcode": "U-02",
+"importance": 1,
+"title": "패스워드 복잡성 설정",
+"result": 1,
+"codedetail": "grep -i \"password\" $SYSAUTH | grep -v \"#\" 의 결과: password [success=1 default=ignore] pam_unix.so obscure yescrypt password requisite pam_deny.so password required pam_permit.so",
+"resultdetail": "패스워드 복잡성 설정이 적용되어 있지 않으므로 취약함"
+},
+{
+"itemcode": "U-03",
+"importance": 1,
+"title": "계정 잠금 임계값 설정",
+"result": 1,
+"codedetail": "grep -i \"password\" $SYSAUTH | grep \"requisite\" | grep -v \"#\" | grep \"retry\" | wc -l 의 결과: 0",
+"resultdetail": "계정 잠금 임계값이 적용되어 있지 않으므로 취약함"
+},
+{
+"itemcode": "U-04",
+"importance": 1,
+"title": "패스워드 최대 사용 기간 설정",
+"result": 1,
+"codedetail": "1) PASS_MAX_DAYS 설정의 결과: , 2) 각 계정별 패스워드 최대 사용기간 설정: ",
+"resultdetail": "PASS_MAX_DAYS 값 및 각 계정에 적용된 패스워드 최대 사용기간이 정책에 맞지 않으므로 취약함"
+},
+{
+"itemcode": "U-05",
+"importance": 1,
+"title": "패스워드 파일 보호",
+"result": 0,
+"codedetail": "head -1 /etc/passwd 의 결과: root:x:0:0:root:/root:/bin/bash ",
+"resultdetail": "패스워드를 /etc/passwd 파일에 저장하지 않고 별도의 파일에 저장하므로 양호함"
+},
+{
+"itemcode": "U-06",
+"importance": 1,
+"title": "root 홈, 패스 디렉터리 권한 및 패스 설정",
+"result": 0,
+"codedetail": "echo $PATH 의 결과: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/Eclipse Adoptium/jdk-11.0.24.8-hotspot/bin:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Neovim/bin:/mnt/c/Program Files/neovim-qt 0.2.18/bin:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/160/DTS/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/160/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/160/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/160/DTS/Binn/:/mnt/c/Program Files/Cloudflare/Cloudflare WARP/:/mnt/c/Program Files/doxygen/bin:/mnt/c/Program Files/MySQL/MySQL Shell 8.0/bin/:/mnt/c/Users/choij/AppData/Local/Programs/Python/Python313/Scripts/:/mnt/c/Users/choij/AppData/Local/Programs/Python/Python313/:/mnt/c/Users/choij/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/choij/.dotnet/tools:/snap/bin ",
+"resultdetail": "PATH 환경변수에 .이 맨 앞 또는 중간에 위치하지 않으므로 양호함"
+},
+{
+"itemcode": "U-07",
+"importance": 1,
+"title": "파일 및 디렉터리 소유자 설정",
+"result": 0,
+"codedetail": "/home 디렉토리에 소유자가 존재하지 않는 파일 검색의 결과: ",
+"resultdetail": "/home 디렉토리에 소유자가 존재하지 않는 파일이 존재하지 않으므로 양호함"
+},
+{
+"itemcode": "U-08",
+"importance": 1,
+"title": "/etc/passwd 파일 소유자 및 권한 설정",
+"result": 0,
+"codedetail": "ls -alL /etc/passwd 의 결과: -rw-r--r-- 1 root root 1478 Aug 23 2024 /etc/passwd ",
+"resultdetail": "/etc/passwd 파일의 소유자(root) 및 퍼미션(644)이 기준에 맞게 설정되었으므로 양호함"
+},
+{
+"itemcode": "U-09",
+"importance": 1,
+"title": "/etc/shadow 파일 소유자 및 권한 설정",
+"result": 1,
+"codedetail": "ls -alL /etc/shadow 의 결과: -rw-r----- 1 root shadow 857 Aug 23 2024 /etc/shadow ",
+"resultdetail": "/etc/shadow 파일의 소유자(root) 및 퍼미션(400/600)이 기준에 맞게 설정되지 않았으므로 취약함"
+},
+{
+"itemcode": "U-10",
+"importance": 1,
+"title": "/etc/hosts 파일 소유자 및 권한 설정",
+"result": 1,
+"codedetail": "ls -alL /etc/hosts 의 결과: -rw-r--r-- 1 root root 411 Jun 16 18:38 /etc/hosts ",
+"resultdetail": "/etc/hosts 파일의 소유자(root) 및 퍼미션(600)이 기준에 맞게 설정되지 않았으므로 취약함"
+},
+{
+"itemcode": "U-11",
+"importance": 1,
+"title": "/etc/(x)inetd.conf 파일 소유자 및 권한 설정",
+"result": 0,
+"codedetail": "ls -alL /etc/inetd.conf 의 결과: ",
+"resultdetail": "/etc/(x)inetd.conf 파일을 찾을 수 없으므로 양호함"
+},
+{
+"itemcode": "U-12",
+"importance": 1,
+"title": "/etc/syslog.conf 파일 소유자 및 권한 설정",
+"result": 0,
+"codedetail": "ls -alL /etc/rsyslog.conf 의 결과: -rw-r--r-- 1 root root 1382 Dec 24 2021 /etc/rsyslog.conf ",
+"resultdetail": "/etc/rsyslog.conf 파일의 소유자(root) 및 퍼미션(644)이 기준에 맞게 설정되었으므로 양호함"
+},
+{
+"itemcode": "U-13",
+"importance": 1,
+"title": "/etc/services 파일 소유자 및 권한 설정",
+"result": 0,
+"codedetail": "ls -alL /etc/services 의 결과: -rw-r--r-- 1 root root 12813 Mar 28 2021 /etc/services ",
+"resultdetail": "/etc/services 파일의 소유자(root) 및 퍼미션(644)이 기준에 맞게 설정되었으므로 양호함"
+},
+{
+"itemcode": "U-14",
+"importance": 1,
+"title": "SUID, SGID, Sticky bit 설정 파일 점검",
+"result": 1,
+"codedetail": "cat tmp_13.txt 의 결과: -rwsr-xr-x 1 root root 40496 Feb 6 2024 /usr/bin/newgrp -rwxr-sr-x 1 root shadow 26776 Jan 10 2024 /sbin/unix_chkpwd ",
+"resultdetail": "점검 파일 중 SUID, SGID가 설정된 파일이 존재하므로 취약함"
+},
+{
+"itemcode": "U-15",
+"importance": 1,
+"title": "사용자, 시스템 시작파일 및 환경파일 소유자 및 권한 설정",
+"result": 0,
+"codedetail": "ls -al /etc/profile 의 결과: -rw-r--r-- 1 root root 582 Oct 15 2021 /etc/profile ",
+"resultdetail": "/etc/profile 파일의 소유자(root) 및 퍼미션(755)이 기준에 맞게 설정되었으므로 양호함"
+},
+{
+"itemcode": "U-16",
+"importance": 1,
+"title": "world writable 파일 점검",
+"result": 0,
+"codedetail": "cat tmp_15.txt 의 결과: ",
+"resultdetail": "/etc 디렉토리 하위에 Others에 쓰기 권한이 부여된 파일이 존재하지 않으므로 양호함"
+},
+{
+"itemcode": "U-17",
+"importance": 1,
+"title": "$HOME/.rhosts, hosts.equiv 사용 금지",
+"result": 1,
+"codedetail": ".rhosts, hosts.equiv 파일 검색의 결과: ",
+"resultdetail": ".rhosts, hosts.equiv 파일이 존재하지 않으므로 양호함"
+},
+{
+"itemcode": "U-18",
+"importance": 1,
+"title": "접속 IP 및 포트 제한",
+"result": 1,
+"codedetail": "cat /etc/hosts.deny 의 결과: , cat /etc/hosts.allow 의 결과: ",
+"resultdetail": "/etc/hosts.deny 파일이 존재하지 않음"
+},
+{
+"itemcode": "U-19",
+"importance": 1,
+"title": "cron 파일 소유자 및 권한 설정",
+"result": 3,
+"codedetail": "cron.deny, cron.allow 파일 검색의 결과: ",
+"resultdetail": "cron.deny, cron.allow 파일을 찾을 수 없음"
+},
+{
+"itemcode": "U-20",
+"importance": 1,
+"title": "Finger 서비스 비활성화",
+"result": 1,
+"codedetail": "ps -ef | grep -i \"finger\" | grep -v \"grep\" 의 결과: ",
+"resultdetail": "Finger 서비스가 실행중이지 않으므로 양호함"
+},
+{
+"itemcode": "U-21",
+"importance": 1,
+"title": "Anonymous FTP 비활성화",
+"result": 1,
+"codedetail": "ps -ef | grep -i \"ftpd\" | grep -v \"grep\" 의 결과: ",
+"resultdetail": "FTP 서비스가 실행중이지 않으므로 양호함"
+},
+{
+"itemcode": "U-22",
+"importance": 1,
+"title": "r 계열 서비스 비활성화",
+"result": 1,
+"codedetail": "r 계열 서비스 검색의 결과: ",
+"resultdetail": "r 계열 서비스가 설치되어 있지 않으므로 양호함"
+},
+{
+"itemcode": "U-23",
+"importance": 1,
+"title": "DoS 공격에 취약한 서비스 비활성화",
+"result": 0,
+"codedetail": "Dos공격에 취약한 서비스 검색의 결과: ",
+"resultdetail": "DoS 공격에 취약한 서비스가 설치되어 있지 않으므로 양호함"
+},
+{
+"itemcode": "U-24",
+"importance": 1,
+"title": "NFS 서비스 비활성화",
+"result": 1,
+"codedetail": "NFS 서비스 검색의 결과: ",
+"resultdetail": "NFS 서비스가 실행중이지 않으므로 양호함"
+},
+{
+"itemcode": "U-25",
+"importance": 1,
+"title": "NFS 접근통제",
+"result": 1,
+"codedetail": "NFS 서비스 검색의 결과: ",
+"resultdetail": "NFS 서비스가 실행중이지 않으므로 양호함"
+},
+{
+"itemcode": "U-26",
+"importance": 1,
+"title": "automountd 제거",
+"result": 0,
+"codedetail": "ps -ef | grep -i \"automountd\" | grep -v \"grep\" 의 결과: ",
+"resultdetail": "automountd 서비스가 실행중이지 않으므로 양호함"
+},
+{
+"itemcode": "U-27",
+"importance": 1,
+"title": "RPC 서비스 확인",
+"result": 0,
+"codedetail": "RPC 서비스 검색의 결과: ",
+"resultdetail": "RPC 서비스가 실행중이지 않으므로 양호함"
+},
+{
+"itemcode": "U-28",
+"importance": 1,
+"title": "NIS, NIS+ 점검",
+"result": 0,
+"codedetail": "NIS, NIS+ 서비스 검색 결과: ",
+"resultdetail": "NIS 서비스가 실행중이지 않으므로 양호함"
+},
+{
+"itemcode": "U-29",
+"importance": 1,
+"title": "tftp, talk 서비스 비활성화",
+"result": 0,
+"codedetail": "tftp, talk 서비스 검색 결과: ",
+"resultdetail": "tftp, talk 서비스가 실행중이지 않으므로 양호함"
+},
+{
+"itemcode": "U-30",
+"importance": 1,
+"title": "Sendmail 버전 점검",
+"result": 0,
+"codedetail": "ps -ef | grep sendmail | grep -v \"grep\" 의 결과: ",
+"resultdetail": "Sendmail 서비스가 실행중이지 않으므로 양호함"
+},
+{
+"itemcode": "U-31",
+"importance": 1,
+"title": "스팸 메일 릴레이 제한",
+"result": 0,
+"codedetail": "Sendmail 서비스 검색 결과: ",
+"resultdetail": "Sendmail 서비스가 실행중이지 않으므로 양호함"
+},
+{
+"itemcode": "U-32",
+"importance": 1,
+"title": "일반사용자의 Sendmail 실행 방지",
+"result": 0,
+"codedetail": "Sendmail 서비스 검색 결과: ",
+"resultdetail": "Sendmail 서비스가 실행중이지 않으므로 양호함"
+},
+{
+"itemcode": "U-33",
+"importance": 1,
+"title": "DNS 보안 버전 패치",
+"result": 2,
+"codedetail": "named -v 의 결과: ",
+"resultdetail": "DNS 서비스가 실행중이며 버전을 확인하여 결과 분석"
+},
+{
+"itemcode": "U-34",
+"importance": 1,
+"title": "DNS ZoneTransfer 설정",
+"result": 2,
+"codedetail": "ss -anp | awk {print $5} | grep -v 127.0.0 | grep \":53$\"의 결과: ",
+"resultdetail": "DNS 서비스가 실행중이나 설정파일을 찾을 수 없음"
+},
+{
+"itemcode": "U-35",
+"importance": 1,
+"title": "최신 보안패치 및 벤더 권고사항 적용",
+"result": 2,
+"codedetail": "uname -a 의 결과: Linux Gilmour 6.6.87.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Mon Apr 21 17:08:54 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux ",
+"resultdetail": "취약점 점검 가이드를 참고하시어 발표된 중 현재 사용 중인 프로그램의 보안 관련 Update 찾아 해당 Update Download"
+},
+{
+"itemcode": "U-36",
+"importance": 1,
+"title": "로그의 정기적 검토 및 보고",
+"result": 2,
+"codedetail": "var/log 또는 var/adm 확인",
+"resultdetail": "취약점 점검 가이드를 참고하시어 로그 기록의 검토 분석 리포트 작성 및 보고 등이 정기적으로 이루어지고 있는지 점검"
+}
+]
+}

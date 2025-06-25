@@ -1,0 +1,14 @@
+pandas>=1.0.0  
+openpyxl==3.0.10
+xlwings>=0.24.0
+chardet>=3.0.0
+streamlit>=1.0.0
+mysql-connector-python==8.4.0
+cryptography>=45.0.1
+
+# LangChain + 실시간 검색 + 환경변수 설정
+langchain>=0.1.17
+langchain-openai>=0.1.6
+langchain-community>=0.0.21
+tavily-python>=0.3.0
+python-dotenv>=1.0.0
